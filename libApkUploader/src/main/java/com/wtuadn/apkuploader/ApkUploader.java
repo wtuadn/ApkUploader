@@ -131,9 +131,12 @@ public class ApkUploader {
             }
             System.out.println("upload apk file:");
             JSONObject apkCert = cert.getJSONObject("binary");
-            HashMap<String, String> params = new HashMap<>(2);
+            HashMap<String, String> params = new HashMap<>(5);
             params.put("key", apkCert.getString("key"));
             params.put("token", apkCert.getString("token"));
+            params.put("x:name", apkMeta.getName());
+            params.put("x:version", apkMeta.getVersionName());
+            params.put("x:build", String.valueOf(apkMeta.getVersionCode()));
             String result = multipartRequest(apkCert.getString("upload_url"), params, apkFile, null, null, "file");
             System.out.println(result);
         } catch (Exception e) {
