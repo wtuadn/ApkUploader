@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -83,6 +84,8 @@ public class ApkUploader {
         try {
             ApkFile apkFileInfo = new ApkFile(apkFile);
             ApkMeta apkMeta = apkFileInfo.getApkMeta();
+//            System.out.println(apkMeta.getName());
+//            if (true)return;
             URL url = new URL("http://api.fir.im/apps");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -205,7 +208,7 @@ public class ApkUploader {
                 outputStream.writeBytes("Content-Disposition: form-data; name=\"" + key + "\"" + lineEnd);
                 outputStream.writeBytes("Content-Type: text/plain" + lineEnd);
                 outputStream.writeBytes(lineEnd);
-                outputStream.writeBytes(value);
+                outputStream.write(value.getBytes(StandardCharsets.UTF_8));
                 outputStream.writeBytes(lineEnd);
             }
 
